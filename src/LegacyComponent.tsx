@@ -72,7 +72,7 @@ export default class LegacyComponent extends Component<
 
   render(): React.ReactNode {
     return (
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth: 2, borderRadius: 2, padding: 10 }}>
         <Button 
           onPress={this.resetHeartbeat.bind(this)} 
           title='Reset count'

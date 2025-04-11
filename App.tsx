@@ -13,7 +13,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Appearance,
   Button,
 } from 'react-native';
 
@@ -57,12 +56,13 @@ const App = () => {
         <View
           style={{
             padding: 20,
+            gap: 10,
           }}>
           <Section title="ServiceMax">
             Legacy component testbed
           </Section>
-          <Button onPress={() => setNewInterval(old => old+1)} title={"Increase interval"} />
-          <LegacyComponent heartbeatInterval={interval} />
+          <Button onPress={() => setNewInterval(old => old+1)} title={`Increase interval (currently ${interval})`} />
+          <LegacyComponent connectionParameters={interval} />
         </View>
       </ScrollView>
     </SafeAreaView>
