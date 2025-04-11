@@ -7,11 +7,11 @@ import {
 import { View, Text, Button } from 'react-native';
 
 export type LegacyComponentProps = {
-  heartbeatInterval: number;
+  connectionParameters: number;
 };
 
 export type LegacyComponentState = {
-  beats: number;
+  requestCount: number;
   connectionId: RegistrationId | undefined;
 };
 
@@ -20,27 +20,27 @@ export default class LegacyComponent extends Component<
   LegacyComponentState
 > {
   state = {
-    beats: 0,
+    requestCount: 0,
     connectionId: undefined,
   };
 
   resetHeartbeat() {
     this.setState({
-      beats: 0,
+      requestCount: 0,
     });
   }
 
-  receiveHeartbeat() {
+  receiveRequest() {
     this.setState({
-      beats: this.state.beats + 1,
+      requestCount: this.state.requestCount + 1,
     });
   }
 
   setupConnection() {
     this.setState({
       connectionId: register(
-        this.receiveHeartbeat.bind(this),
-        this.props.heartbeatInterval,
+        this.receiveRequest.bind(this),
+        this.props.connectionParameters,
       ),
     });
   }
@@ -60,7 +60,7 @@ export default class LegacyComponent extends Component<
     prevProps: LegacyComponentProps,
     _prevState: LegacyComponentState,
   ) {
-    if (this.props.heartbeatInterval !== prevProps.heartbeatInterval) {
+    if (this.props.connectionParameters !== prevProps.connectionParameters) {
       this.destroyConnection();
       this.setupConnection();
     }
@@ -78,7 +78,7 @@ export default class LegacyComponent extends Component<
           title='Reset count'
           color="#158484"
         />
-        <Text style={{marginTop: 10}}>Count: {this.state.beats}</Text>
+        <Text style={{marginTop: 10}}>Count: {this.state.requestCount}</Text>
       </View>
     );
   }

@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,6 +14,7 @@ import {
   Text,
   View,
   Appearance,
+  Button,
 } from 'react-native';
 
 import LegacyComponent from './src/LegacyComponent';
@@ -25,25 +26,18 @@ type SectionProps = React.PropsWithChildren<{
 class Section extends Component<SectionProps> {
   render() {
     const {children, title} = this.props;
-    const isDarkMode = Appearance.getColorScheme() === 'dark';
 
     return (
       <View style={styles.sectionContainer}>
         <Text
           style={[
             styles.sectionTitle,
-            {
-              color: isDarkMode ? '#FFF' : '#000',
-            },
           ]}>
           {title}
         </Text>
         <Text
           style={[
             styles.sectionDescription,
-            {
-              color: isDarkMode ? '#FFF' : '#000',
-            },
           ]}>
           {children}
         </Text>
@@ -52,37 +46,27 @@ class Section extends Component<SectionProps> {
   }
 }
 
-class App extends Component {
-  render() {
-    const isDarkMode = Appearance.getColorScheme() === 'dark';
+const App = () => {
+  const [interval, setNewInterval] = useState<number>(1);
 
-    const backgroundStyle = {
-      backgroundColor: isDarkMode ? '#000' : '#FFF',
-    };
-
-    return (
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <View
-            style={{
-              backgroundColor: isDarkMode ? '#000' : '#DDD',
-              padding: 20,
-            }}>
-            <Section title="ServiceMax">
-              Legacy component testbed
-            </Section>
-            <LegacyComponent heartbeatInterval={1} />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
+  return (
+    <SafeAreaView>
+      <StatusBar/>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic">
+        <View
+          style={{
+            padding: 20,
+          }}>
+          <Section title="ServiceMax">
+            Legacy component testbed
+          </Section>
+          <Button onPress={() => setNewInterval(old => old+1)} title={"Increase interval"} />
+          <LegacyComponent heartbeatInterval={interval} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
