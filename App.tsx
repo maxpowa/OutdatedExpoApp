@@ -57,6 +57,7 @@ const App = () => {
           style={{
             padding: 20,
             gap: 10,
+            maxWidth: 500,
           }}>
           <Section title="ServiceMax">
             Legacy component testbed
